@@ -108,14 +108,14 @@ SHOW PROCEDURE STATUS WHERE Db = 'bronze';
 
 
 -- Select The DataBase
-USE bronze;
+-- USE bronze;
 
 -- ADD prints to track execution, debug issues and understand it flow
 
 
 
 -- Resetting it to an empty state
-TRUNCATE TABLE crm_cust_info;
+TRUNCATE TABLE bronze.crm_cust_info;
 	
 -- LOAD DATA With BULK Feature
 	
@@ -128,13 +128,13 @@ IGNORE 1 LINES;
 
 -- CHECK that the data has not shifted and is in the correct columns
 	
-SELECT * FROM crm_cust_info;
+SELECT * FROM bronze.crm_cust_info;
 	
-SELECT COUNT(*) AS Number_Of_Rows FROM crm_cust_info; 
+SELECT COUNT(*) AS Number_Of_Rows FROM bronze.crm_cust_info; 
 	
 	
 -- Resetting it to an empty state
-TRUNCATE TABLE crm_prd_info;
+TRUNCATE TABLE bronze.crm_prd_info;
 	
 -- LOAD DATA With BULK Feature
 	
@@ -147,14 +147,14 @@ IGNORE 1 LINES;
 	
 -- CHECK that the data has not shifted and is in the correct columns
 	
-SELECT * FROM crm_prd_info;
+SELECT * FROM bronze.crm_prd_info;
 	
-SELECT COUNT(*) AS Number_Of_Rows FROM crm_prd_info;
+SELECT COUNT(*) AS Number_Of_Rows FROM bronze.crm_prd_info;
 	
 	
 	
 -- Resetting it to an empty state
-TRUNCATE TABLE crm_sales_details;
+TRUNCATE TABLE bronze.crm_sales_details;
 	
 -- LOAD DATA With BULK Feature
 	
@@ -167,9 +167,9 @@ IGNORE 1 LINES;
 	
 -- CHECK that the data has not shifted and is in the correct columns
 	
-SELECT * FROM crm_sales_details;
+SELECT * FROM bronze.crm_sales_details;
 	
-SELECT COUNT(*) AS Number_Of_Rows FROM crm_sales_details; 
+SELECT COUNT(*) AS Number_Of_Rows FROM bronze.crm_sales_details; 
 	
 	
 
@@ -178,7 +178,7 @@ SELECT COUNT(*) AS Number_Of_Rows FROM crm_sales_details;
 
 
 -- Resetting it to an empty state
-TRUNCATE TABLE erp_cust_az12;
+TRUNCATE TABLE bronze.erp_cust_az12;
 	
 -- LOAD DATA With BULK Feature
 	
@@ -191,14 +191,14 @@ IGNORE 1 LINES;
 	
 -- CHECK that the data has not shifted and is in the correct columns
 	
-SELECT * FROM erp_cust_az12;
+SELECT * FROM bronze.erp_cust_az12;
 	
-SELECT COUNT(*) AS Number_Of_Rows FROM erp_cust_az12; 
+SELECT COUNT(*) AS Number_Of_Rows FROM bronze.erp_cust_az12; 
 	
 	
 	
 -- Resetting it to an empty state
-TRUNCATE TABLE erp_loc_a101;
+TRUNCATE TABLE bronze.erp_loc_a101;
 	
 -- LOAD DATA With BULK Feature
 	
@@ -211,15 +211,15 @@ IGNORE 1 LINES;
 	
 -- CHECK that the data has not shifted and is in the correct columns
 	
-SELECT * FROM erp_loc_a101;
+SELECT * FROM bronze.erp_loc_a101;
 	
-SELECT COUNT(*) AS Number_Of_Rows FROM erp_loc_a101; 
+SELECT COUNT(*) AS Number_Of_Rows FROM bronze.erp_loc_a101; 
 	
 	
 	
 	
 -- Resetting it to an empty state
-TRUNCATE TABLE erp_px_cat_g1v2;
+TRUNCATE TABLE bronze.erp_px_cat_g1v2;
 	
 -- LOAD DATA With BULK Feature
 	
@@ -232,9 +232,9 @@ IGNORE 1 LINES;
 	
 -- CHECK that the data has not shifted and is in the correct columns
 	
-SELECT * FROM erp_px_cat_g1v2;
+SELECT * FROM bronze.erp_px_cat_g1v2;
 	
-SELECT COUNT(*) AS Number_Of_Rows FROM erp_px_cat_g1v2;
+SELECT COUNT(*) AS Number_Of_Rows FROM bronze.erp_px_cat_g1v2;
 
 
 

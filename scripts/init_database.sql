@@ -15,14 +15,11 @@ GO
  */
 
 -- Define Schema of Layer
-
--- CREATE bronze Schema
+/*
 CREATE SCHEMA bronze;
-
--- CREATE silver Schema
 CREATE SCHEMA silver;
-
--- CREATE gold Schema
 CREATE SCHEMA gold;
+*/
+
 
 
