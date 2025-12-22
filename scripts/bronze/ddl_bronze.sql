@@ -6,6 +6,17 @@ USE bronze;
 /* SQL SERVER Synthaxe
  IF OBJECT_ID ('bronze.crm_cust_info', 'U') IS NOT NULL
  	DROP TABLE bronze.crm_cust_info;
+ 
+ CREATE TABLE crm_cust_info (
+	cst_id INT,
+	cst_key VARCHAR(50),
+	cst_firstname VARCHAR(50),
+	cst_lastname VARCHAR(50),
+	cst_material_status VARCHAR(50),
+	cst_gndr VARCHAR(50),
+	cst_create_data DATE
+ );
+ 
 */
 
 DROP TABLE IF EXISTS crm_cust_info; 
