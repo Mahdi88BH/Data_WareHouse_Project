@@ -217,3 +217,83 @@ SELECT
 		ELSE 'n/A'
 	END gen
 FROM bronze.erp_cust_az12;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- 2) Table ERP loc_a101
+
+TRUNCATE TABLE silver.erp_loc_a101;
+
+INSERT INTO silver.erp_loc_a101(
+	cid,
+	cntry
+)
+SELECT
+	REPLACE(cid, '-', '') AS cid,
+	CASE
+    	WHEN cntry IS NULL OR TRIM(cntry) = '\r' THEN 'n/A'
+    	WHEN UPPER(TRIM(cntry)) = 'DE\r' THEN 'Germany\r'
+    	WHEN UPPER(TRIM(cntry)) IN ('US\r','USA\r') THEN 'United States\r'
+    	ELSE TRIM(cntry)
+    END AS cntry
+FROM bronze.erp_loc_a101;
+
+
+
+
+
+
+
+-- 3) Table ERP px_cat_g1v2
+
+TRUNCATE TABLE silver.erp_px_cat_g1v2; 
+
+INSERT INTO silver.erp_px_cat_g1v2(
+	id,
+	cat,
+	subcat,
+	maintenance
+)
+SELECT
+	IF(id='CO_PD', NULL, id) id,
+	cat,
+	subcat,
+	CASE TRIM(maintenance)
+		WHEN 'Yes\r' THEN 'Yes'
+		ELSE maintenance
+	END maintenance
+FROM bronze.erp_px_cat_g1v2;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

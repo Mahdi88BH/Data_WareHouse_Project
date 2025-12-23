@@ -435,3 +435,167 @@ SELECT gen
 FROM CTE 
 WHERE UPPER(TRIM(REPLACE(REPLACE(gen, '\r', ''), '\n', ''))) = 'M'
 	OR UPPER(TRIM(REPLACE(REPLACE(gen, '\r', ''), '\n', ''))) = 'F';
+
+
+
+
+
+
+
+
+
+
+
+-- 2) ERP loc_a101
+
+
+-- Handel the value of join column and Check Unmatch columns
+SELECT
+	REPLACE(cid, '-', '') AS cid,
+	cntry
+FROM bronze.erp_loc_a101
+WHERE REPLACE(cid, '-', '') NOT IN (
+	SELECT 
+		cst_key 
+	FROM silver.crm_cust_info
+);
+
+-- Data Standardization & consistence 
+SELECT 
+	DISTINCT cntry
+FROM silver.erp_loc_a101
+ORDER BY cntry;
+
+
+SELECT 
+	*
+FROM bronze.erp_loc_a101
+WHERE cntry IS NULL;
+
+
+SELECT 
+	*
+FROM bronze.erp_loc_a101
+WHERE TRIM(cntry) != cntry;
+
+
+SELECT DISTINCT
+    cntry,
+    LENGTH(cntry),
+    HEX(cntry) -- TRIM() NE SUPPRIME PAS \r en MySQL
+FROM bronze.erp_loc_a101;
+
+
+
+WITH CTE AS(
+	SELECT
+		CASE 
+			WHEN UPPER(TRIM(cntry)) = 'DE\r' THEN 'Germany\r'
+			WHEN UPPER(TRIM(cntry)) IN ('US\r', 'USA\r') THEN 'United States\r'
+			WHEN TRIM(cntry) = '\r' OR cntry IS NULL THEN 'n/A'
+			ELSE TRIM(cntry)
+		END cntry
+	FROM bronze.erp_loc_a101 ela
+)
+SELECT DISTINCT cntry FROM CTE;
+
+
+
+
+SELECT DISTINCT cntry
+FROM (
+    SELECT
+        CASE
+            WHEN cntry IS NULL OR TRIM(cntry) = '\r' THEN 'n/A'
+            WHEN TRIM(cntry) = 'DE\r' THEN 'Germany'
+            WHEN TRIM(cntry) IN ('US\r','USA\r') THEN 'United States'
+            ELSE TRIM(cntry)
+        END AS cntry
+    FROM bronze.erp_loc_a101
+) t;
+
+
+SELECT
+	cntry AS old_cntry,
+	CASE 
+		WHEN UPPER(TRIM(cntry)) = 'DE\r' THEN 'Germany'
+		WHEN UPPER(TRIM(cntry)) IN ('US\r', 'USA\r') THEN 'United States'
+		WHEN TRIM(cntry) = '\r' OR cntry IS NULL THEN 'n/A'
+		ELSE TRIM(cntry)
+	END cntry
+FROM bronze.erp_loc_a101 ela
+GROUP BY cntry, old_cntry;
+
+
+SELECT * FROM silver.erp_loc_a101;
+
+
+
+
+
+
+
+
+
+-- 3) ERP px_cat_g1v2
+
+SELECT
+	id,
+	cat,
+	subcat,
+	maintenance
+FROM bronze.erp_px_cat_g1v2;
+
+SELECT * FROM silver.crm_prd_info
+
+
+-- Check Unmatch id column
+
+SELECT
+	id
+FROM silver.erp_px_cat_g1v2
+WHERE id NOT IN(
+	SELECT cat_id FROM silver.crm_prd_info 
+);
+
+
+
+-- Unwanted spaces
+
+SELECT *
+FROM bronze.erp_px_cat_g1v2
+WHERE cat != TRIM(cat) 
+	OR subcat != TRIM(subcat)
+	OR maintenance != TRIM(maintenance);
+
+
+-- DATA Standardization & Consistency
+
+SELECT DISTINCT cat
+FROM bronze.erp_px_cat_g1v2;
+
+SELECT DISTINCT subcat
+FROM bronze.erp_px_cat_g1v2;
+
+SELECT DISTINCT maintenance
+FROM silver.erp_px_cat_g1v2;
+
+SELECT 
+	DISTINCT maintenance,
+	LENGTH(maintenance),
+	HEX(maintenance)
+FROM bronze.erp_px_cat_g1v2;
+
+SELECt DISTINCT maintenance, HEX(maintenance)
+FROM(
+	SELECT
+		CASE TRIM(maintenance)
+			WHEN 'Yes\r' THEN 'Yes'
+			ELSE maintenance
+		END maintenance
+	FROM bronze.erp_px_cat_g1v2
+) t;
+
+
+
+
